@@ -1,56 +1,114 @@
+<script setup>
+  const { login } = useAuth()
+
+  const error = ref('')
+  const isLoading = ref(false)
+  const formData = ref({
+    email: '',
+    password: ''
+  })
+
+  const handleLogin = async () => {
+    error.value = ""
+    isLoading.value = true
+
+    try {
+      const data = formData.value
+      const res = await login(data)
+
+      const authCookie = useCookie('auth_token', {
+        maxAge: 60 * 60 * 24 * 7,
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production'
+      });
+
+      authCookie.value = res.data.token;
+
+      navigateTo(`/dashboard/${res.data.user.role}/`)
+    } catch(e) {
+      error.value = e.response['_data'].message
+    } finally {
+      isLoading.value = false
+    }
+  }
+</script>
+
 <template>
   <div class="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-100 to-blue-100 p-4">
-    <main class="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg">
+    <UCard variant="soft" class="w-full max-w-md shadow-lg bg-white py-8 px-2">
+
       <div class="mb-8 text-center">
         <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center">
-          <img src="/favicon.png" alt="">
+          <img src="/favicon.png" alt="Logo">
         </div>
         <h1 class="text-2xl font-bold text-slate-900">LMS Portal</h1>
         <p class="mt-2 text-sm text-slate-600">Sign in to your account</p>
       </div>
 
-      <form class="space-y-5">
-        <div class="rounded-lg border border-red-300 bg-red-50 p-4 text-sm text-red-700" role="alert">
-          Invalid email or password
-        </div>
+      <UForm class="space-y-5" @submit.prevent="handleLogin">
+        
+        <UAlert
+          v-if="error"
+          color="error"
+          variant="subtle"
+          :title="error"
+        />
 
-        <div>
-          <label for="email" class="mb-2 block text-sm font-medium text-slate-700">
-            Email Address
-          </label>
-          <input
-            id="email"
-            name="email"
+        <UFormField 
+          required 
+          label="Email" 
+          name="email"
+          :ui="{ label: 'text-black' }"
+          >
+          <UInput
+            class="w-full"
+            color="neutral"
+            variant="subtle"
             type="email"
-            autocomplete="email"
-            required
-            class="w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
             placeholder="you@example.com"
-          />
-        </div>
-
-        <div>
-          <label for="password" class="mb-2 block text-sm font-medium text-slate-700">
-            Password
-          </label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            autocomplete="current-password"
+            autocomplete="email"
+            size="xl"
+            :ui="{ base: 'bg-white text-black focus-visible:ring-black' }"
             required
-            class="w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter your password"
-          />
-        </div>
 
-        <button
+            v-model="formData.email"
+          />
+        </UFormField>
+
+        <UFormField 
+          required 
+          label="Password" 
+          name="password"
+          :ui="{ label: 'text-black' }"
+          >
+          <UInput
+            class="w-full"
+            color="neutral"
+            variant="subtle"
+            type="password"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+            size="xl"
+            :ui="{ base: 'bg-white text-black focus-visible:ring-black' }"
+            required
+
+            v-model="formData.password"
+          />
+        </UFormField>
+
+        <UButton
           type="submit"
-          class="w-full rounded-lg bg-blue-600 px-4 py-3 font-semibold text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          color="info"
+          size="xl"
+          block
+          variant="subtle"
+          :ui="{ base: 'cursor-pointer' }"
+          :loading="isLoading"
         >
           Sign In
-        </button>
-      </form>
-    </main>
+        </UButton>
+        
+      </UForm>
+    </UCard>
   </div>
 </template>
