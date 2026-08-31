@@ -1,32 +1,31 @@
-import { useApi } from "./useApi"
+import { useApi } from "./useApi";
 
 export const useAuth = () => {
-  
-  const login = async (credentials: object) => {
+  const login = async (credentials: any): Promise<any> => {
     try {
-      const response = await useApi('/login', {
-        method: 'POST',
-        body: credentials
-      })
-      return response
+      const response = await useApi("/login", {
+        method: "POST",
+        body: credentials,
+      });
+      return response;
     } catch (error) {
-      throw error
+      throw error;
     }
-  }
+  };
 
   const logout = async () => {
     try {
-      await useApi('/logout', {
-        method: 'POST'
-      })
+      await useApi("/logout", {
+        method: "POST",
+      });
 
-      const token = useCookie('auth_token')
-      token.value = null
-      navigateTo('/login')
+      const token = useCookie("auth_token");
+      token.value = null;
+      navigateTo("/login");
     } catch (error) {
-      console.error('Gagal logout', error)
+      throw error;
     }
-  }
+  };
 
-  return { login, logout }
-}
+  return { login, logout };
+};

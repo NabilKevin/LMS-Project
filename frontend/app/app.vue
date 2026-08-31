@@ -1,8 +1,13 @@
-<script setup>
-</script>
+<script setup></script>
 
 <template>
   <div>
-    <NuxtPage />
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+
+    <UModal />
+    <UOverlayProvider />
+    <UApp />
   </div>
 </template>
