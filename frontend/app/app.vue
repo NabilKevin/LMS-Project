@@ -6,7 +6,6 @@
       <NuxtPage />
     </NuxtLayout>
 
-    <UModal />
     <UOverlayProvider />
     <UApp />
   </div>

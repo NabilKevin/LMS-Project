@@ -31,7 +31,8 @@ const emit = defineEmits<{ close: [boolean] }>();
           @click="emit('close', false)"
         />
         <UButton
-          color="secondary"
+          color="neutral"
+          variant="outline"
           class="text-white cursor-pointer"
           :label="btnText2"
           @click="emit('close', true)"

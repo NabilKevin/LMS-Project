@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useAppModalConfirmation } from "~/composables/useAppModalConfirmation.ts";
-
 const navItems = [
   { label: "Dashboard", icon: "i-lucide-layout-dashboard", active: true },
   { label: "My Courses", icon: "i-lucide-book-open" },
@@ -24,7 +22,6 @@ const handleLogout = async () => {
     try {
       await logout();
       success("Success logout!");
-      navigateTo("/login");
     } catch {
       error("Failed logout!");
     }

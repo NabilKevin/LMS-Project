@@ -11,14 +11,15 @@
     "typecheck": "nuxt typecheck"
   },
   "dependencies": {
-    "@iconify-json/lucide": "^1.2.125",
     "@iconify-json/simple-icons": "^1.2.93",
     "@nuxt/ui": "^4.11.0",
     "nuxt": "^4.5.2",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
+    "@iconify-json/lucide": "^1.2.125",
     "@nuxt/eslint": "^1.17.0",
+    "@types/node": "^26.4.0",
     "eslint": "^10.9.0",
     "typescript": "^6.0.3",
     "vue-component-type-helpers": "^3.3.11",

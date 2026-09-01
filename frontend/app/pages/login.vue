@@ -13,20 +13,11 @@ const handleLogin = async () => {
   isLoading.value = true;
 
   try {
-    const data = formData.value;
-    const res = await login(data);
-
-    const authCookie = useCookie("auth_token", {
-      maxAge: 60 * 60 * 24 * 7,
-      sameSite: "lax",
-      secure: !import.meta.dev,
-    });
-
-    authCookie.value = res.data.token;
-
-    navigateTo(`/dashboard/${res.data.user.role}/`);
+    const res = await login(formData.value);
+    await navigateTo(`/${res.user.role}/dashboard`);
   } catch (e: any) {
-    error.value = e.response["_data"].message;
+    error.value =
+      e?.response?._data?.message || "An error occurred during login.";
   } finally {
     isLoading.value = false;
   }
