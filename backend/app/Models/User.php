@@ -43,13 +43,13 @@ class User extends Authenticatable
         ];
     }
 
-    public function getJWTIdentifier()
+    public function studentProfile()
     {
-        return $this->getKey();
+        return $this->hasOne(StudentProfile::class);
     }
 
-    public function getJWTCustomClaims()
+    public function teacherProfile()
     {
-        return [];
+        return $this->hasOne(TeacherProfile::class);
     }
 }

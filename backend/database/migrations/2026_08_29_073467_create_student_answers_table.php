@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Tabel Jawaban Siswa (Student Answers)
         Schema::create('student_answers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('student_profile_id');
             $table->unsignedBigInteger('question_id');
-            $table->unsignedBigInteger('question_option_id');
+            $table->unsignedBigInteger('question_option_id')->nullable();
             $table->text('essay_answer')->nullable();
             $table->timestamps();
 

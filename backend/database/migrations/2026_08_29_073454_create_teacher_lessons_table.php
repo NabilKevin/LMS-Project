@@ -11,6 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Tabel Guru - Mata Pelajaran (Teacher-Lessons)
+        // Digunakan untuk menghubungkan Guru dengan Mata Pelajaran yang diajarkan oleh guru tersebut
+        // Contoh: Guru A mengajar Matematika dan Bahasa Indonesia, Guru B mengajar Fisika dan Kimia, Guru C mengajar Bahasa Inggris
         Schema::create('teacher_lessons', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('teacher_profile_id');

@@ -11,6 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Tabel Opsi Pertanyaan (Question Options)
+        // Digunakan untuk menyimpan opsi-opsi jawaban yang akan ditampilkan dalam ujian (exam) atau kuis (Quiz)
         Schema::create('question_options', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('question_id');

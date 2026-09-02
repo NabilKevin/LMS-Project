@@ -11,13 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Tabel Konten Bab (Topic Contents)
         Schema::create('topic_contents', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('topic_id'); // Masuk ke BAB mana?
-            $table->enum('content_type', ['material_center', 'material_teacher', 'quiz', 'exam', 'assignment']);
+            $table->enum('content_type', [
+                'material_center', 
+                'material_teacher', 
+                'quiz', 
+                'daily_exam', // Ulangan harian
+                'midterm_exam', // Ujian Akhir Semester
+                'final_exam', // Ujian Tengah Semester
+                'assignment'
+            ]); 
             $table->unsignedBigInteger('author_id')->nullable(); // Di isi jika merupakan materi, kuis, ujian atau tugas dari guru 
             $table->string('title');
-            $table->text('content'); // Isi materi bacaan (Null jika kuis/ujian)
+            $table->text('content')->nullable(); // Isi materi bacaan (Null jika kuis/ujian)
             
             $table->integer('order_number'); // Urutan materi di dalam Bab tersebut (increment di setiap topik atau bab)
             // contoh

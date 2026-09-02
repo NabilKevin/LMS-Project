@@ -1,10 +1,14 @@
 <script setup lang="ts">
+import type { LoginResponse } from "~/types/auth";
+
 const navItems = [
   { label: "Dashboard", icon: "i-lucide-layout-dashboard", active: true },
   { label: "My Courses", icon: "i-lucide-book-open" },
   { label: "Assignments", icon: "i-lucide-clipboard-check" },
   { label: "Calendar", icon: "i-lucide-calendar-days" },
 ];
+
+const user = useCookie<LoginResponse["user"]>("user_data");
 
 const { logout } = useAuth();
 const { success, error } = useAppToast();
@@ -35,7 +39,7 @@ const handleLogout = async () => {
   >
     <div class="flex h-20 items-center gap-3 border-b border-slate-200 px-7">
       <div class="grid size-9 place-items-center rounded-xl">
-        <img src="/favicon.png" alt="Logo" />
+        <img src="/images/favicon.png" alt="Logo" />
       </div>
       <span class="text-lg font-bold tracking-tight text-[#172238]"
         >LMS Portal</span
@@ -71,7 +75,7 @@ const handleLogout = async () => {
       />
       <UButton
         label="Log Out"
-        icon="i-lucide-square-arrow-right-exit"
+        icon="i-lucide-log-out"
         variant="ghost"
         color="error"
         block
@@ -81,15 +85,15 @@ const handleLogout = async () => {
       />
       <div class="mt-4 flex items-center gap-3 rounded-xl bg-[#f7f9fc] p-3">
         <UAvatar
-          src="https://i.pravatar.cc/100?img=47"
-          alt="Alex Morgan"
+          :src="user?.photo_url ?? '/images/photo_profile_null.jpeg'"
+          :alt="user?.full_name"
           size="sm"
         />
         <div class="min-w-0 flex-1">
-          <p class="truncate text-sm font-semibold">Alex Morgan</p>
-          <p class="truncate text-xs text-[#8693a7]">Student</p>
+          <p class="truncate text-sm font-semibold">{{ user?.full_name }}</p>
+          <p class="truncate text-xs text-[#8693a7]">{{ user?.role }}</p>
         </div>
-        <UIcon name="i-lucide-more-horizontal" class="size-4 text-[#9aa6b8]" />
+        <UIcon name="i-lucide-ellipsis" class="size-4 text-[#9aa6b8]" />
       </div>
     </div>
   </aside>

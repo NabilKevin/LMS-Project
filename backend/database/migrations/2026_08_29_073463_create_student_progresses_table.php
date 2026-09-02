@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Tabel progress siswa (Student Progresses)
+        // Digunakan untuk mencatat progress siswa dalam menyelesaikan konten bab (Materi) yang diajarkan oleh guru di kelas tersebut
         Schema::create('student_progresses', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('class_topic_content_id');
             $table->unsignedBigInteger('student_profile_id');
             $table->boolean('is_completed');
-            $table->timestamp('completed_at');
+            $table->timestamp('completed_at')->nullable();
             $table->timestamps();
 
             $table->foreign('class_topic_content_id')->references('id')->on('class_topic_contents')->onDelete('cascade');

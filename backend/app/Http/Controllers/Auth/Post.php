@@ -33,7 +33,8 @@ class Post extends Controller
      *       "id": 1,
      *       "name": "Nabil",
      *       "email": "nabil@sekolah.com",
-     *       "role": "admin"
+     *       "role": "admin",
+     *       "full_name": "Nabil"    
      *     },
      *     "token": "1|AbCdEfGhIjKlMnOpQrStUvWxYz"
      *   }

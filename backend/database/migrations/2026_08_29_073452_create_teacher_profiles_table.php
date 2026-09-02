@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Tabel Profil Guru (Teacher Profiles)
         Schema::create('teacher_profiles', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('full_name');
             $table->string('academic_title'); // Gelar guru (M.pd, S.pd, ...)
             $table->string('nip')->unique();
+            $table->string('photo_path')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

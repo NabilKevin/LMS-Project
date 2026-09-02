@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Tabel Profil Siswa (Student Profiles)
         Schema::create('student_profiles', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('full_name');
             $table->string('nis')->unique();
             $table->unsignedBigInteger('class_id');
+            $table->string('photo_path')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

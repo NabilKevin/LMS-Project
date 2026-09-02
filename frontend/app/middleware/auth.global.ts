@@ -6,7 +6,7 @@ export default defineNuxtRouteMiddleware((to) => {
     return navigateTo("/login");
   }
 
-  if (user.value?.role && to.path === "/login") {
+  if (user.value?.role && (to.path === "/login" || to.path === "/")) {
     return navigateTo(`/${user.value?.role}/dashboard`);
   }
 

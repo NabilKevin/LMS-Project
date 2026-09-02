@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Tabel Komentar (Material Comments)
         Schema::create('material_comments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('class_assignment_id');
+            $table->unsignedBigInteger('class_topic_content_id');
             $table->unsignedBigInteger('user_id');
             $table->text('comment');
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('class_assignment_id')->references('id')->on('class_assignments')->onDelete('cascade');
+            $table->foreign('class_topic_content_id')->references('id')->on('class_topic_contents')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

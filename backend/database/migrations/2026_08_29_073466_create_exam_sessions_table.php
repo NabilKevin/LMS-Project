@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('exam_sessions', function (Blueprint $table) {
+        // Tabel Sesi Ujian (Student Exam Sessions)
+        // Digunakan untuk mencatat sesi ujian yang diikuti oleh siswa, termasuk waktu mulai dan berakhirnya ujian, status selesai atau tidak, serta skor akhir jika sudah selesai
+        Schema::create('student_exam_sessions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('student_profile_id');
             $table->unsignedBigInteger('class_topic_content_id');
             $table->timestamp('start_time');
-            $table->timestamp('end_time');
-            $table->boolean('is_finished');
-            $table->boolean('force_submitted');
+            $table->timestamp('end_time')->nullable();
+            $table->boolean('is_finished'); // menandakan apakah siswa sudah menyelesaikan ujian atau belum
+            $table->boolean('force_submitted'); // jika siswa melakukan kecurangan atau kehabisan waktu maka ujian akan otomatis disubmit oleh sistem
             $table->float('final_score')->nullable();
             $table->timestamps();
 
@@ -32,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('exam_sessions');
+        Schema::dropIfExists('student_exam_sessions');
     }
 };

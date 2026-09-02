@@ -11,6 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Tabel Pertanyaan (Questions) 
+        // Digunakan untuk menyimpan pertanyaan-pertanyaan yang akan digunakan dalam ujian (exam) atau kuis (Quiz)
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('topic_content_id');

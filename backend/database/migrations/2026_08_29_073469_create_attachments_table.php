@@ -11,17 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Tabel Lampiran (Attachments)
         Schema::create('attachments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('topic_content_id')->nullable(); // Diisi JIKA ini file materi/soal dari Guru
-            $table->unsignedBigInteger('student_submission_id')->nullable(); // Diisi JIKA ini file tugas dari Murid
+            $table->morphs('attachable');
             $table->string('file_name');
-            $table->string('file_url');
-            $table->string('file_type');
+            $table->string('file_path');
+            $table->string('mime_type', 100);
+            $table->unsignedBigInteger('file_size')->nullable(); // ukuran dalam bytes
             $table->timestamps();
-
-            $table->foreign('topic_content_id')->references('id')->on('topic_contents')->onDelete('cascade');
-            $table->foreign('student_submission_id')->references('id')->on('student_submissions')->onDelete('cascade');
         });
     }
 

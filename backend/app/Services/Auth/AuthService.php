@@ -16,10 +16,16 @@ class AuthService
     /** @var \App\Models\User $user */
     $user = Auth::user();
 
+    $profile = match ($user->role) {
+        'teacher' => $user->teacherProfile,
+        'student' => $user->studentProfile,
+        default => null,
+    };
+
     $token = $user->createToken('LMS-token')->plainTextToken;
     
     return [
-      'user' => new UserResource($user),
+      'user' => new UserResource($user->setRelation('profile', $profile)),
       'token' => $token
     ];
   }

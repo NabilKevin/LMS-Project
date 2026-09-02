@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Tabel Bab (Topics)
         Schema::create('topics', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('lesson_id');

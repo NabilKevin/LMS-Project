@@ -255,7 +255,7 @@ const stats = [
           <p class="mt-1 text-sm text-[#6f7e94]">Stay on top of your work</p>
         </div>
         <UButton
-          icon="i-lucide-more-horizontal"
+          icon="i-lucide-ellipsis"
           variant="ghost"
           color="secondary"
           aria-label="More deadline options"

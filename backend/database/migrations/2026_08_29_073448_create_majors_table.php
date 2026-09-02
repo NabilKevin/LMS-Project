@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Tabel Jurusan (Majors)
         Schema::create('majors', function (Blueprint $table) {
             $table->id();
             $table->string('name');

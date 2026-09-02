@@ -1,5 +1,5 @@
 export default defineNuxtConfig({
-  modules: ["@nuxt/eslint", "@nuxt/ui", "@nuxt/icon"],
+  modules: ["@nuxt/eslint", "@nuxt/ui"],
 
   devtools: {
     enabled: true,
@@ -21,10 +21,22 @@ export default defineNuxtConfig({
       },
     },
   },
+  icon: {
+    provider: "none",
+    clientBundle: {
+      scan: true
+    },
+  },
   app: {
     head: {
       title: "Learning Management System",
-      link: [{ rel: "icon", type: "image/png", href: "/favicon.png" }],
+      link: [
+        {
+          rel: "icon",
+          type: "image/png",
+          href: "/images/favicon.png",
+        },
+      ],
     },
   },
   runtimeConfig: {

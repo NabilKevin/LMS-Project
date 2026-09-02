@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Tabel Kelas (Classes)
         Schema::create('classes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('major_id');

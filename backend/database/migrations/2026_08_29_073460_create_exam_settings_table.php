@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Tabel Pengaturan Ujian (Exam Settings)
         Schema::create('exam_settings', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('topic_content_id');
             $table->integer('duration_minutes'); // durasi ujian
-            $table->integer('max_attemps'); // jumlah maksimal percobaan
+            $table->integer('max_attempts'); // jumlah maksimal percobaan
             $table->boolean('show_result_after'); // menampilkan hasil setelah selesai 
             $table->boolean('shuffle_questions'); // acak soal
             $table->timestamps();

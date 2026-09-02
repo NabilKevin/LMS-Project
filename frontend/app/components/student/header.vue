@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import type { LoginResponse } from "~/types/auth";
+
+const user = useCookie<LoginResponse["user"]>("user_data");
+</script>
+
 <template>
   <header
     class="flex h-20 items-center justify-between border-b border-slate-200 bg-white/90 px-5 backdrop-blur sm:px-8"
@@ -36,13 +42,13 @@
       />
       <div class="hidden h-7 w-px bg-[#e7ebf2] sm:block" />
       <UAvatar
-        src="https://i.pravatar.cc/100?img=47"
-        alt="Alex Morgan"
+        :src="user?.photo_url ?? '/images/photo_profile_null.jpeg'"
+        alt="{{ user?.full_name }}"
         size="sm"
       />
       <div class="hidden sm:block">
-        <p class="text-sm font-semibold">Alex Morgan</p>
-        <p class="text-xs text-[#8693a7]">Student</p>
+        <p class="text-sm font-semibold">{{ user?.full_name }}</p>
+        <p class="text-xs text-[#8693a7]">{{ user?.role }}</p>
       </div>
       <UIcon
         name="i-lucide-chevron-down"

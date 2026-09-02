@@ -31,7 +31,7 @@ const handleLogin = async () => {
     <UCard variant="soft" class="w-full max-w-md shadow-lg bg-white py-8 px-2">
       <div class="mb-8 text-center">
         <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center">
-          <img src="/favicon.png" alt="Logo" />
+          <img src="/images/favicon.png" alt="Logo" />
         </div>
         <h1 class="text-2xl font-bold text-slate-900">LMS Portal</h1>
         <p class="mt-2 text-sm text-slate-600">Sign in to your account</p>

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Pengumpulan tugas murid
+        // Tabel Pengumpulan Tugas Murid (Student Submissions)
         Schema::create('student_submissions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('student_profile_id');

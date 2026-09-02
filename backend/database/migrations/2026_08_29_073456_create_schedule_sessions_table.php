@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Tabel Jadwal Pelajaran (Schedule Sessions)
         Schema::create('schedule_sessions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('class_assignment_id');
-            $table->tinyInteger('day_oF_week'); // Hari apa? (1=Senin, 2=Selasa, dst)
+            $table->tinyInteger('day_of_week'); // Hari apa? (1=Senin, 2=Selasa, dst)
             $table->time('start_time'); // Jam mulai (Misal: 09:00:00)
             $table->time('end_time'); // Jam selesai (Misal: 11:00:00)
             $table->string('room_name', 50)->nullable(); // (Opsional) Ruangan kelas/Link Zoom
