@@ -2,11 +2,29 @@
 import type { LoginResponse } from "~/types/auth";
 
 const navItems = [
-  { label: "Dashboard", icon: "i-lucide-layout-dashboard", active: true },
-  { label: "My Courses", icon: "i-lucide-book-open" },
-  { label: "Assignments", icon: "i-lucide-clipboard-check" },
-  { label: "Calendar", icon: "i-lucide-calendar-days" },
+  {
+    label: "Dashboard",
+    icon: "i-lucide-layout-dashboard",
+    to: "/student/dashboard",
+  },
+  {
+    label: "Mata Pelajaran",
+    icon: "i-lucide-book-open",
+    to: "/student/courses",
+  },
+  // {
+  //   label: "Assignments",
+  //   icon: "i-lucide-clipboard-check",
+  //   to: "/student/assignments",
+  // },
+  // {
+  //   label: "Calendar",
+  //   icon: "i-lucide-calendar-days",
+  //   to: "/student/calendar",
+  // },
 ];
+
+const route = useRoute();
 
 const user = useCookie<LoginResponse["user"]>("user_data");
 
@@ -56,8 +74,9 @@ const handleLogout = async () => {
         :key="item.label"
         :label="item.label"
         :icon="item.icon"
-        :variant="item.active ? 'soft' : 'ghost'"
-        :color="item.active ? 'secondary' : 'neutral'"
+        :variant="route.path === item.to ? 'soft' : 'ghost'"
+        :color="route.path === item.to ? 'secondary' : 'neutral'"
+        :href="item.to"
         block
         class="justify-start rounded-xl px-3 py-2.5 font-medium text-slate-900 hover:bg-slate-100 active:bg-slate-300"
         :ui="{ base: 'cursor-pointer' }"

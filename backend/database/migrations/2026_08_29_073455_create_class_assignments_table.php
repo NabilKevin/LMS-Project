@@ -18,7 +18,9 @@ return new class extends Migration
         Schema::create('class_assignments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('class_id');
+            
             // $table->unsignedBigInteger('lesson_id'); // bisa ambil dari teacher_lesson_id
+
             $table->unsignedBigInteger('teacher_lesson_id');
             $table->string('academic_year', 9); // Tahun ajaran (2025/2026, 2026/2027, ...)
             $table->timestamps();

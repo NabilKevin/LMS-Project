@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { LoginResponse } from "~/types/auth";
+
 definePageMeta({
   layout: "student-dashboard",
 });
@@ -53,44 +55,55 @@ const deadlines = [
 
 const stats = [
   {
-    label: "Overall Progress",
+    label: "Progres keseluruhan",
     value: "74%",
-    detail: "+6% from last week",
+    detail: "+6% dari minggu lalu",
     icon: "i-lucide-trending-up",
     tone: "blue",
   },
   {
-    label: "Completed Courses",
+    label: "Pembelajaran yang telah diselesaikan",
     value: "12",
-    detail: "2 this semester",
+    detail: "2 semester sekarang",
     icon: "i-lucide-graduation-cap",
     tone: "green",
   },
   {
-    label: "Current Streak",
+    label: "Runtutan belajar saat ini",
     value: "14 days",
-    detail: "Keep it going!",
+    detail: "Pertahankan!",
     icon: "i-lucide-flame",
     tone: "orange",
   },
 ];
+
+const user = useCookie<LoginResponse["user"]>("user_data");
+
+const date = new Date();
 </script>
 
 <template>
   <section class="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
     <div>
       <p class="mb-2 text-sm font-medium text-[#6f7e94]">
-        Monday, August 26, 2024
+        {{
+          date.toLocaleDateString("id-ID", {
+            weekday: "long",
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+          })
+        }}
       </p>
       <h1 class="text-3xl font-bold tracking-tight text-[#172238] sm:text-4xl">
-        Good morning, Alex
+        Selamat Pagi, {{ user?.full_name }}
       </h1>
       <p class="mt-2 text-[#6f7e94]">
-        Here&apos;s what&apos;s happening with your learning today.
+        Inilah perkembangan belajar Anda hari ini.
       </p>
     </div>
     <UButton
-      label="View calendar"
+      label="Lihat Kalender"
       icon="i-lucide-calendar-days"
       variant="outline"
       color="secondary"
@@ -106,17 +119,16 @@ const stats = [
       class="flex flex-col justify-between gap-8 md:flex-row md:items-center"
     >
       <div>
-        <p class="text-sm font-medium text-blue-100">Your learning journey</p>
+        <p class="text-sm font-medium text-blue-100">Perjalanan belajarmu</p>
         <h2 class="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
-          Small steps every day<br class="hidden sm:block" />
-          lead to big results.
+          Langkah kecil setiap hari<br class="hidden sm:block" />
+          menghasilkan hasil yang besar.
         </h2>
         <p class="mt-3 max-w-md text-sm leading-6 text-blue-100">
-          You&apos;re making great progress this semester. Keep your momentum
-          going!
+          Progresmu semester ini keren banget. Jaga terus semangatmu!
         </p>
         <UButton
-          label="Continue learning"
+          label="Lanjutkan belajar"
           trailing-icon="i-lucide-arrow-right"
           color="secondary"
           class="mt-6 rounded-xl border-0 bg-white text-[#2563eb] hover:bg-slate-100"
@@ -132,7 +144,9 @@ const stats = [
         />
         <div class="text-center">
           <p class="text-3xl font-bold">74%</p>
-          <p class="text-[11px] font-medium text-blue-100">overall progress</p>
+          <p class="text-[11px] font-medium text-blue-100">
+            Progres keseluruhan
+          </p>
         </div>
       </div>
     </div>
@@ -143,7 +157,7 @@ const stats = [
       v-for="stat in stats"
       :key="stat.label"
       :ui="{ body: 'p-5 sm:p-6' }"
-      class="rounded-2xl border border-slate-200 bg-white shadow-none"
+      class="rounded-2xl border border-slate-200 bg-white shadow-sm ring-0"
       ><div class="flex items-start justify-between">
         <div>
           <p class="text-sm font-medium text-[#6f7e94]">
@@ -184,8 +198,8 @@ const stats = [
     <section>
       <div class="mb-4 flex items-center justify-between">
         <div>
-          <h2 class="text-xl font-bold tracking-tight">Continue learning</h2>
-          <p class="mt-1 text-sm text-[#6f7e94]">Pick up where you left off</p>
+          <h2 class="text-xl font-bold tracking-tight">Lanjutkan belajar</h2>
+          <p class="mt-1 text-sm text-[#6f7e94]">Lanjut dari materi terakhir</p>
         </div>
         <UButton
           label="View all courses"
@@ -201,7 +215,7 @@ const stats = [
           v-for="course in courses"
           :key="course.title"
           :ui="{ body: 'p-4 sm:p-5' }"
-          class="rounded-2xl border border-slate-200 bg-white shadow-none"
+          class="rounded-2xl border border-slate-200 bg-white shadow-sm ring-0"
           ><div class="flex items-center gap-4">
             <div
               class="grid size-11 shrink-0 place-items-center rounded-xl"
@@ -251,8 +265,12 @@ const stats = [
     <section>
       <div class="mb-4 flex items-center justify-between">
         <div>
-          <h2 class="text-xl font-bold tracking-tight">Upcoming deadlines</h2>
-          <p class="mt-1 text-sm text-[#6f7e94]">Stay on top of your work</p>
+          <h2 class="text-xl font-bold tracking-tight">
+            Tenggat waktu terdekat
+          </h2>
+          <p class="mt-1 text-sm text-[#6f7e94]">
+            Jangan sampai ada yang terlewat
+          </p>
         </div>
         <UButton
           icon="i-lucide-ellipsis"
@@ -264,7 +282,7 @@ const stats = [
       </div>
       <UCard
         :ui="{ body: 'p-2 sm:p-3' }"
-        class="rounded-2xl border border-slate-200 bg-white shadow-none"
+        class="rounded-2xl border border-slate-200 bg-white shadow-sm ring-0"
         ><div class="divide-y divide-[#edf0f5]">
           <div
             v-for="deadline in deadlines"

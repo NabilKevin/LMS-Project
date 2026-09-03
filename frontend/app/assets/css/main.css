@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
+@theme {
+  --color-secondary: oklch(0.56 0.26 257.71);
+}
+
 :root {
   color-scheme: light;
 }

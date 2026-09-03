@@ -26,6 +26,7 @@ return new class extends Migration
             ]); 
             $table->unsignedBigInteger('author_id')->nullable(); // Di isi jika merupakan materi, kuis, ujian atau tugas dari guru 
             $table->string('title');
+            $table->string('slug')->unique(); // Slug untuk URL
             $table->text('content')->nullable(); // Isi materi bacaan (Null jika kuis/ujian)
             
             $table->integer('order_number'); // Urutan materi di dalam Bab tersebut (increment di setiap topik atau bab)
