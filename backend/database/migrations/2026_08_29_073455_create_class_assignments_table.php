@@ -19,15 +19,15 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('class_id');
             
-            // $table->unsignedBigInteger('lesson_id'); // bisa ambil dari teacher_lesson_id
+            // $table->unsignedBigInteger('course_id'); // bisa ambil dari teacher_course_id
 
-            $table->unsignedBigInteger('teacher_lesson_id');
+            $table->unsignedBigInteger('teacher_course_id');
             $table->string('academic_year', 9); // Tahun ajaran (2025/2026, 2026/2027, ...)
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('class_id')->references('id')->on('classes')->onDelete('cascade');
-            $table->foreign('teacher_lesson_id')->references('id')->on('teacher_lessons')->onDelete('cascade');
+            $table->foreign('teacher_course_id')->references('id')->on('teacher_courses')->onDelete('cascade');
         });
     }
 

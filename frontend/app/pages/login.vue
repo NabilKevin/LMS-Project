@@ -14,7 +14,7 @@ const handleLogin = async () => {
 
   try {
     const res = await login(formData.value);
-    await navigateTo(`/${res.user.role}/dashboard`);
+    await navigateTo(`/${res.user.role}`);
   } catch (e: any) {
     error.value =
       e?.response?._data?.message || "An error occurred during login.";

@@ -14,13 +14,13 @@ return new class extends Migration
         // Tabel Bab (Topics)
         Schema::create('topics', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('lesson_id');
+            $table->unsignedBigInteger('course_id');
             $table->string('name');
             $table->integer('order_number'); // Urutan bab (1, 2, 3...)
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('lesson_id')->references('id')->on('lessons')->onDelete('cascade');
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
         });
     }
 

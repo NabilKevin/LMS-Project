@@ -17,11 +17,13 @@ return new class extends Migration
             $table->unsignedBigInteger('class_topic_content_id');
             $table->unsignedBigInteger('user_id');
             $table->text('comment');
+            $table->unsignedBigInteger('parent_id')->nullable(); // jika ada isinya maka comment tersebut merupakan reply comment
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('class_topic_content_id')->references('id')->on('class_topic_contents')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('parent_id')->references('id')->on('material_comments')->onDelete('cascade');
         });
     }
 

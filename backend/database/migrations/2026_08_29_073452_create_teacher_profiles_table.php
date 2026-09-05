@@ -16,7 +16,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('full_name');
-            $table->string('academic_title'); // Gelar guru (M.pd, S.pd, ...)
+            $table->string('title_prefix')->nullable(); // Gelar guru bagian depan (Dr., Prof., ...)
+            $table->string('title_suffix')->nullable(); // Gelar guru bagian belakang (M.pd, S.pd, ...)
             $table->string('nip')->unique();
             $table->string('photo_path')->nullable();
             $table->timestamps();

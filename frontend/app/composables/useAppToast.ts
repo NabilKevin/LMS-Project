@@ -1,31 +1,31 @@
 export const useAppToast = () => {
   const toast = useToast();
 
+  const baseUi = {
+    root: "bg-white ring-black",
+    title: "text-slate-800",
+  } as const;
+
   const success = (title: string, description?: string) => {
     toast.add({
-      title: title,
-      description: description,
+      title,
+      description,
       color: "secondary",
-      id: "modal-secondary",
-      ui: {
-        root: "bg-white ring-black",
-        title: "text-slate-800",
-      },
+      ui: baseUi,
     });
   };
 
   const error = (title: string, description?: string) => {
     toast.add({
-      title: title,
-      description: description,
+      title,
+      description,
       color: "error",
-      id: "modal-error",
-      ui: {
-        root: "bg-white ring-black",
-        title: "text-slate-800",
-      },
+      ui: baseUi,
     });
   };
 
-  return { success, error };
+  const warning = (title: string, description?: string) => {
+    toast.add({ title, description, color: "warning", ui: baseUi });
+  };
+  return { success, error, warning };
 };

@@ -12,6 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         // Tabel Jadwal Pelajaran (Schedule Sessions)
+        // Fungsi tabel:
+        // 1. Untuk absensi
+        // 2. Jika ada ulangan harian atau kuis hanya bisa di akses pada jam tersebut
+        // 3. Untuk membuat schedule di LMS nya (jadi ada fitur schedule)
         Schema::create('schedule_sessions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('class_assignment_id');

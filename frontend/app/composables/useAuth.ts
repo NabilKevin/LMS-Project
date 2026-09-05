@@ -1,6 +1,11 @@
 import type { LoginResponse } from "~/types/auth";
 
 export const useAuth = () => {
+  const userCookie = useCookie<LoginResponse["user"] | null>("user_data");
+
+  const user = computed(() => userCookie.value);
+  const isAuthenticated = computed(() => !!userCookie.value?.role);
+
   const login = async (credentials: {
     email: string;
     password: string;
@@ -16,5 +21,5 @@ export const useAuth = () => {
     await navigateTo("/login");
   };
 
-  return { login, logout };
+  return { user, isAuthenticated, login, logout };
 };

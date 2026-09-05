@@ -19,6 +19,10 @@ return new class extends Migration
             $table->text('text_answer')->nullable(); // Jawaban murid
             $table->float('score')->nullable();
             $table->enum('submission_method', ['student_direct', 'teacher_manual'])->default('student_direct'); // fungsi dari teacher manual adalah jika ada murid yang kirim tugas direct ke gurunya, misal jika terlambat mengumpulkan dll.
+            $table->enum('status', ['draft', 'submitted', 'graded', 'late'])->default('draft');
+
+            $table->timestamp('submitted_at')->nullable();
+            $table->timestamp('graded_at')->nullable(); // Kapan tugasnya dinilai
             $table->timestamps();
 
             $table->foreign('student_profile_id')->references('id')->on('student_profiles')->onDelete('cascade');

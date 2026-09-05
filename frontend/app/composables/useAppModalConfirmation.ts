@@ -1,17 +1,20 @@
+// composables/useAppModalConfirmation.ts
 import ModalConfirmation from "~/components/ModalConfirmation.vue";
 
-export const useAppModalConfirmation = async (modalBody: {
+interface ModalBody {
   title: string;
   btnText1: string;
   btnText2: string;
-}): Promise<boolean> => {
+}
+
+export const useAppModalConfirmation = () => {
   const overlay = useOverlay();
 
-  const modal = overlay.create(ModalConfirmation);
+  const confirm = async (modalBody: ModalBody): Promise<boolean> => {
+    const modal = overlay.create(ModalConfirmation);
+    const instance = modal.open(modalBody);
+    return await instance.result;
+  };
 
-  const instance = modal.open(modalBody);
-
-  const confirmation = await instance.result;
-
-  return confirmation;
+  return { confirm };
 };
