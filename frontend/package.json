@@ -20,6 +20,8 @@
     "@iconify-json/lucide": "^1.2.128",
     "@nuxt/eslint": "^1.17.0",
     "@types/node": "^26.4.0",
+    "@vueuse/core": "^14.4.0",
+    "@vueuse/nuxt": "^14.4.0",
     "eslint": "^10.9.0",
     "typescript": "^6.0.3",
     "vue-component-type-helpers": "^3.3.11",

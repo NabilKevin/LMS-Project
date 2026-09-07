@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useAuth } from "~/composables/api/useAuth";
 import type { LoginResponse } from "~/types/auth";
 
 const navItems = [

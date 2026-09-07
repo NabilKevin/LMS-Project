@@ -5,7 +5,10 @@
   >
     <div class="p-6 sm:p-8">
       <UBreadcrumb
-        :items="[{ label: 'Kursus Saya', to: '#' }, { label: 'Matematika' }]"
+        :items="[
+          { label: 'Kursus Saya', to: '/student/courses' },
+          { label: 'Matematika' },
+        ]"
         class="mb-7"
         color="secondary"
       />
@@ -34,7 +37,14 @@
             <span class="font-medium text-slate-600">Kemajuan kursus</span>
             <span class="font-bold text-secondary">42%</span>
           </div>
-          <UProgress :model-value="42" color="secondary" size="md" />
+          <UProgress
+            :model-value="42"
+            color="secondary"
+            size="md"
+            :ui="{
+              base: 'bg-gray-300!',
+            }"
+          />
           <p class="mt-2 text-xs text-slate-400">5 dari 12 materi selesai</p>
         </div>
       </div>

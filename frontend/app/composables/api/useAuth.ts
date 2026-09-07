@@ -1,4 +1,5 @@
 import type { LoginResponse } from "~/types/auth";
+import { useApi } from "./useApi";
 
 export const useAuth = () => {
   const userCookie = useCookie<LoginResponse["user"] | null>("user_data");
@@ -10,14 +11,14 @@ export const useAuth = () => {
     email: string;
     password: string;
   }): Promise<LoginResponse> => {
-    return await $fetch<LoginResponse>("/api/login", {
+    return await useApi<LoginResponse>("/api/auth/login", {
       method: "POST",
       body: credentials,
     });
   };
 
   const logout = async () => {
-    await $fetch("/api/logout", { method: "POST" });
+    await useApi("/api/auth/logout", { method: "POST" });
     await navigateTo("/login");
   };
 

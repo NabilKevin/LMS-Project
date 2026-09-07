@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useAuth } from "~/composables/api/useAuth";
+
 const { login } = useAuth();
 
 const error = ref("");

@@ -1,86 +1,41 @@
 <script setup lang="ts">
+import { useCourses } from "~/composables/api/useCourses";
+import type { Courses } from "~/types/courses";
+import type { Pagination } from "~/types/pagination";
+
 definePageMeta({
   layout: "student-dashboard",
 });
 
-const statusOptions = ["Active", "Completed"];
+const { getCourses } = useCourses();
+const { error } = useAppToast();
 
-const courses = [
-  {
-    title: "Introduction to Algorithms",
-    status: "Active",
-    code: "CS-101",
-    instructor: "Dr. Budi Santoso",
-    year: "2026/2027",
-    progress: 65,
-    icon: "i-lucide-binary",
-    tone: "blue",
-  },
-  {
-    title: "Database Systems",
-    status: "Active",
-    code: "IT-202",
-    instructor: "Prof. Ratna Sari",
-    year: "2026/2027",
-    progress: 42,
-    icon: "i-lucide-database",
-    tone: "indigo",
-  },
-  {
-    title: "Human Computer Interaction",
-    status: "Active",
-    code: "DES-204",
-    instructor: "Dr. Maya Pratama",
-    year: "2026/2027",
-    progress: 88,
-    icon: "i-lucide-panels-top-left",
-    tone: "sky",
-  },
-  {
-    title: "Computer Networks",
-    status: "Active",
-    code: "CS-210",
-    instructor: "Ir. Dimas Wijaya",
-    year: "2026/2027",
-    progress: 31,
-    icon: "i-lucide-network",
-    tone: "blue",
-  },
-  {
-    title: "Information Security",
-    status: "Active",
-    code: "IT-305",
-    instructor: "Dr. Nia Permata",
-    year: "2026/2027",
-    progress: 74,
-    icon: "i-lucide-shield-check",
-    tone: "indigo",
-  },
-  {
-    title: "Software Engineering",
-    status: "Active",
-    code: "SE-301",
-    instructor: "Prof. Arif Hidayat",
-    year: "2026/2027",
-    progress: 55,
-    icon: "i-lucide-layers-3",
-    tone: "sky",
-  },
-];
+const courses = ref<Courses[]>([]);
+const paginationData = ref<Pagination>();
+const page = ref(1);
+const loading = ref(true);
 
-const selectedStatus = ref("Active");
-const search = ref("");
+const handleSearch = (status: string, search?: string) => {
+  fetch(status, search);
+};
 
-const filteredCourses = computed(() =>
-  courses.filter((course) => {
-    const matchesSearch = `${course.title} ${course.code} ${course.instructor}`
-      .toLowerCase()
-      .includes(search.value.toLowerCase());
-    const matchesStatus =
-      selectedStatus.value === "All" || course.status === selectedStatus.value;
-    return matchesSearch && matchesStatus;
-  }),
-);
+const fetch = async (status: string = "all", search?: string) => {
+  loading.value = true;
+
+  try {
+    const { data, pagination } = await getCourses(page.value, status, search);
+    courses.value = [...data];
+    paginationData.value = pagination;
+  } catch (er: any) {
+    if (import.meta.client) {
+      error("Failed to get courses, please refresh the page!");
+    }
+  } finally {
+    loading.value = false;
+  }
+};
+
+fetch();
 </script>
 
 <template>
@@ -88,18 +43,15 @@ const filteredCourses = computed(() =>
     <section
       class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between"
     >
-      <StudentCoursesHeader
-        :selectedStatus="selectedStatus"
-        :statusOptions="statusOptions"
-        :search="search"
-      />
+      <StudentCoursesHeader :handleSearch="handleSearch" />
     </section>
     <section class="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-      <StudentCoursesCard :filteredCourses="filteredCourses" />
+      <StudentCoursesCardSkeleton v-if="loading" />
+      <StudentCoursesCard v-else :courses="courses" />
     </section>
 
     <div
-      v-if="filteredCourses.length === 0"
+      v-if="courses?.length === 0 && !loading"
       class="mt-8 rounded-2xl border border-slate-200 bg-white p-10 text-center shadow-sm"
     >
       <UIcon name="i-lucide-search-x" class="mx-auto size-8 text-slate-400" />

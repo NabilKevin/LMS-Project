@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Courses;
 
+use App\Exceptions\StudentProfileNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CourseResource;
 use App\Models\ClassAssignment;
@@ -102,19 +103,32 @@ class Get extends Controller
     {
         $user = $request->user();
 
+        $page = max(1, $request->integer('page', 1));
+        $search = trim((string) $request->input('search', ''));
+        $status = $request->input('status', 'all');
+
         $user->loadMissing('studentProfile');
 
-        $studentProfile = $user->studentProfile
-            ?? throw new \RuntimeException('Student profile not found for user #' . $user->id);
+        $studentProfile = $user->studentProfile;
+
+        if (! $studentProfile) {
+            throw new StudentProfileNotFoundException($user->id);
+        }
 
         $courses = $this->courseService->getCourses(
             classId: $studentProfile->class_id,
             studentProfileId: $studentProfile->id,
+            page: $page,
+            search: $search,
+            status: $status,
         );
 
-        return $this->respondSuccess(
+        return $this->respondSuccessPagination(
             'Successfully get data',
-            CourseResource::collection($courses),
+            CourseResource::collection($courses['data']),
+            $page,
+            10,
+            $courses['total'],
             200
         );
     }

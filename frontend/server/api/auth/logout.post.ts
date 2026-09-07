@@ -1,9 +1,13 @@
-// server/api/logout.post.ts
 export default defineEventHandler(async (event) => {
   const token = getCookie(event, "auth_token");
   const config = useRuntimeConfig(event);
 
-  if (token) {
+  // Baca query parameter, misalnya /api/auth/logout?local=true
+  const query = getQuery(event);
+  const isLocalOnly = query.local === "true";
+
+  // Hanya tembak backend JIKA token ada DAN bukan perintah localOnly
+  if (token && !isLocalOnly) {
     try {
       await $fetch(`${config.apiBaseUrl}/logout`, {
         method: "POST",
