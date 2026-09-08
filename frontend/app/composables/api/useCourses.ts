@@ -1,4 +1,4 @@
-import type { Courses } from "~/types/courses";
+import type { Course, Courses } from "~/types/courses";
 import type { Pagination } from "~/types/pagination";
 import { useApi } from "./useApi";
 
@@ -22,5 +22,17 @@ export const useCourses = () => {
     );
   };
 
-  return { getCourses };
+  const getCourse = async (
+    slug: string,
+  ): Promise<{
+    data: Course;
+  }> => {
+    return await useApi<{
+      data: Course;
+    }>(`/api/student/courses/${slug}`, {
+      method: "GET",
+    });
+  };
+
+  return { getCourses, getCourse };
 };

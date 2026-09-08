@@ -26,6 +26,8 @@ class MajorCourseSeeder extends Seeder
             'name' => 'Akuntansi',
         ]);
 
+        // ----------------------------------------------------------------------
+
         Course::create([
             'name' => 'Matematika',
             'slug' => 'matematika'
@@ -51,6 +53,8 @@ class MajorCourseSeeder extends Seeder
             'slug' => 'pendidikan-kewarganegaraan'
         ]);
 
+        // ----------------------------------------------------------------------
+        
         MajorCourse::create([
             'major_id' => 1,
             'course_id' => 1,

@@ -17,7 +17,10 @@ export default defineEventHandler(async (event) => {
         `${config.apiBaseUrl}/students/courses?page=${page}&status=${status}${search && search !== "" ? `&search=${search}` : ""}`,
         {
           method: "GET",
-          headers: { Authorization: `Bearer ${token}` },
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "Application/json",
+          },
         },
       );
 

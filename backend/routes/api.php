@@ -13,5 +13,6 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::prefix('students')->middleware(isStudent::class)->group(function () {
 
     Route::get('/courses', [Courses\Get::class, 'index']);
+    Route::get('/courses/{slug}', [Courses\Get::class, 'Show']);
   });
 });

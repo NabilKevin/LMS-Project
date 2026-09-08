@@ -2,6 +2,7 @@ export const useApi = async <T>(request: string, opts?: any) => {
   try {
     return await $fetch<T>(request, opts);
   } catch (error: any) {
+    console.log(error.response);
     if (error.response?.status === 401) {
       console.warn("Sesi habis. Mengeluarkan user...");
 

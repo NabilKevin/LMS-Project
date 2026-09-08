@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Courses;
 use App\Exceptions\StudentProfileNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CourseResource;
+use App\Http\Resources\CoursesResource;
 use App\Models\ClassAssignment;
+use App\Models\Course;
 use App\Services\CourseService;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
@@ -109,11 +111,8 @@ class Get extends Controller
 
         $user->loadMissing('studentProfile');
 
-        $studentProfile = $user->studentProfile;
-
-        if (! $studentProfile) {
-            throw new StudentProfileNotFoundException($user->id);
-        }
+        $studentProfile = $user->studentProfile
+            ?? throw new StudentProfileNotFoundException($user->id);
 
         $courses = $this->courseService->getCourses(
             classId: $studentProfile->class_id,
@@ -125,10 +124,29 @@ class Get extends Controller
 
         return $this->respondSuccessPagination(
             'Successfully get data',
-            CourseResource::collection($courses['data']),
+            CoursesResource::collection($courses['data']),
             $page,
             10,
             $courses['total'],
+            200
+        );
+    }
+
+    public function show(Request $request, $slug)
+    {
+        $user = $request->user();
+        $user->loadMissing('studentProfile');
+        $studentProfile = $user->studentProfile
+            ?? throw new StudentProfileNotFoundException($user->id);
+
+        $course = $this->courseService->getCourse(
+            classId: $studentProfile->class_id,
+            studentProfileId: $studentProfile->id,
+            slug: $slug
+        );
+        return $this->respondSuccess(
+            'Successfully get data',
+            $course[0],
             200
         );
     }

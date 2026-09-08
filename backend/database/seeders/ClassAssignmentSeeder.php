@@ -40,6 +40,12 @@ class ClassAssignmentSeeder extends Seeder
         ]);
 
         ClassAssignment::create([
+            'class_id' => 1,
+            'teacher_course_id' => 5,
+            'academic_year' => '2026/2027',
+        ]);
+
+        ClassAssignment::create([
             'class_id' => 2,
             'teacher_course_id' => 1,
             'academic_year' => '2026/2027',

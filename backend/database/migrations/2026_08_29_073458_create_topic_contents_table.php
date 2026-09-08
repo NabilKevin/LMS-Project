@@ -15,20 +15,28 @@ return new class extends Migration
         Schema::create('topic_contents', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('topic_id'); // Masuk ke BAB mana?
-            $table->enum('content_type', [
-                'material_center', 
-                'material_teacher', 
-                'quiz', 
-                'daily_exam', // Ulangan harian
-                'midterm_exam', // Ujian Akhir Semester
-                'final_exam', // Ujian Tengah Semester
-                'assignment'
-            ]); 
-            $table->unsignedBigInteger('author_id')->nullable(); // Di isi jika merupakan materi, kuis, ujian atau tugas dari guru 
+            // KATEGORI: apa jenis konten ini secara pedagogis
+            $table->enum('category', [
+                'material',     // konten belajar (dulu material_center + material_teacher digabung di sini)
+                'quiz',
+                'daily_exam',
+                'midterm_exam', // UTS
+                'final_exam',   // UAS
+                'assignment',
+            ]);
+
+            // SUMBER: hanya relevan kalau category = 'material'
+            $table->enum('source', ['center', 'teacher'])->nullable();
+
+            // FORMAT: hanya relevan kalau category = 'material'
+            // (quiz/exam/assignment biasanya render UI soal sendiri, tidak butuh format ini)
+            $table->enum('format', ['text', 'pdf', 'video', 'slide'])->nullable();
+
+            $table->unsignedBigInteger('author_id')->nullable(); // Di isi jika merupakan materi, kuis, ujian atau tugas dari guru
             $table->string('title');
             $table->string('slug')->unique(); // Slug untuk URL
             $table->text('content')->nullable(); // Isi materi bacaan (Null jika kuis/ujian)
-            
+
             $table->integer('order_number'); // Urutan materi di dalam Bab tersebut (increment di setiap topik atau bab)
             // contoh
             // Video Pengantar (order_number: 1)

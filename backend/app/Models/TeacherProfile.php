@@ -8,9 +8,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class TeacherProfile extends Model
 {
     use SoftDeletes;
-    
+
     protected $guarded = ['id'];
 
+    public function teacher_courses()
+    {
+        return $this->hasMany(TeacherCourse::class);
+    }
     public function user()
     {
         return $this->belongsTo(User::class);

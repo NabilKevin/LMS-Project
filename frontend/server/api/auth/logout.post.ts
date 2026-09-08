@@ -11,7 +11,10 @@ export default defineEventHandler(async (event) => {
     try {
       await $fetch(`${config.apiBaseUrl}/logout`, {
         method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "Application/json",
+        },
       });
     } catch (e) {
       console.error("Error occurred while logging out:", e);

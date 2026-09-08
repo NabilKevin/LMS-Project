@@ -19,30 +19,39 @@ class TeacherSeeder extends Seeder
         TeacherProfile::create([
             'user_id' => 2,
             'nip' => '0987654321',
-            'academic_title' => 'M.Pd',
+            'title_suffix' => 'M.Pd',
             'full_name' => 'Kayla Lil Firdausy',
         ]);
 
         TeacherProfile::create([
             'user_id' => 4,
             'nip' => '6281039563',
-            'academic_title' => 'S.Pd',
+            'title_suffix' => 'S.Pd',
             'full_name' => 'Ar Sakha Ransi Alden Bogar',
         ]);
 
         TeacherProfile::create([
             'user_id' => 5,
             'nip' => '3859103756',
-            'academic_title' => 'S.Pd',
+            'title_suffix' => 'S.Pd',
             'full_name' => 'Kevin Sanjaya',
         ]);
 
         TeacherProfile::create([
             'user_id' => 6,
             'nip' => '4729371042',
-            'academic_title' => 'M.Pd',
+            'title_suffix' => 'M.Pd',
             'full_name' => 'Tom Holland',
         ]);
+
+        TeacherProfile::create([
+            'user_id' => 7,
+            'nip' => '482917583`',
+            'title_suffix' => 'S.Pd',
+            'full_name' => 'Tobey Maguire',
+        ]);
+
+        // ------------------------------------------------
 
         TeacherCourse::create([
             'teacher_profile_id' => 1,
@@ -62,6 +71,14 @@ class TeacherSeeder extends Seeder
         TeacherCourse::create([
             'teacher_profile_id' => 4,
             'course_id' => 4,
+        ]);
+        TeacherCourse::create([
+            'teacher_profile_id' => 4,
+            'course_id' => 5,
+        ]);
+        TeacherCourse::create([
+            'teacher_profile_id' => 5,
+            'course_id' => 5,
         ]);
         
     }
